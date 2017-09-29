@@ -12,6 +12,8 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
+from kivy.core.image import ImageData
+# from kivy.graphics import Rectangle, Color
 
 from kivymd.theming import ThemeManager
 from kivymd.label import MDLabel
@@ -33,12 +35,39 @@ class FileViewer(Screen):
     pathFile = ObjectProperty(None)
 
     def createViewer(self):
+        # pathFile = MainApp.showPath(self)
+        # boxWidget = BoxLayout()
+        # boxWidget.add_widget(Selector.select_viewer(self, pathFile))
+        #
+        # with boxWidget.canvas:
+        #     Color(1, 0, 0, 1)  # set the colour to red
+        #     boxWidget.rect = Rectangle(pos=boxWidget.center,
+        #                           size=(640,480))
+        # self.add_widget(boxWidget)
+
         pathFile = MainApp.showPath(self)
-        widget = Widget()
-        print("id del widget: ")
-        print(widget.id)
         widget = Selector.select_viewer(self, pathFile)
         self.add_widget(widget)
+
+    # taken and modified from kivy "work in progress" module to convert PIL image to kivy image
+    # original API opened an ImageData object from a filepath
+    # Extracted it from the coverage of the API in order to open an ImageData object from a PIlImage object
+    # https://kivy.org/build/coverage/kivy_core_image_img_pil.html
+    def _img_read(self, im):
+        im.seek(0)
+        try:
+            img_ol = None
+            while True:
+                img_tmp = im
+                if img_ol and (hasattr(im, 'dispose') and not im.dispose):
+                    img_ol.paste(img_tmp, (0, 0), img_tmp)
+                    img_tmp = img_ol
+                img_ol = img_tmp
+                yield ImageData(img_tmp.size[0], img_tmp.size[1],
+                                img_tmp.mode.lower(), img_tmp.tobytes())
+                im.seek(im.tell() + 1)
+        except EOFError:
+            pass
 
 class MainApp(App):
     theme_cls = ThemeManager()

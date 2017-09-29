@@ -14,7 +14,7 @@ from core.videoViewer import VideoViewer
 class Selector():
     def select_viewer(self, path):
         image_list = ('jpg', 'jpeg', 'png', 'bmp', 'dib', 'gif', 'ico', '3fr',
-        'tga', 'tif', 'tiff')
+        'tga', 'tif', 'tiff', 'nef')
         media_list = ('3gp', 'amr', 'flv', 'mkv', 'mp3', 'mp4', 'wav', '3g2',
         'aac', 'mov', 'aiff', 'au', 'avi', 'mpg', 'ogg', 'ppm', 'pgm', 'pbm')
         # Available lexers: http://pygments.org/docs/lexers/
