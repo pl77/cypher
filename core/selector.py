@@ -9,17 +9,17 @@ from core.codeViewer import CodeViewer
 from core.videoViewer import VideoViewer
 
 
-
 # TODO: probar las extensiones de pygments
-# TODO: ver 'ac3'
+# TODO: works with warning: 'nef',
 class Selector():
     def select_viewer(self, path):
-        image_list = ('jpg', 'jpeg', 'png', 'bmp', 'dib', 'gif', 'ico')
-        media_list = ('3gp', 'amr', 'flv', 'mkv', 'mp3', 'mp4', 'wav', '3g2', 'aac',
-        'mov')
+        image_list = ('jpg', 'jpeg', 'png', 'bmp', 'dib', 'gif', 'ico', '3fr',
+        'tga', 'tif', 'tiff')
+        media_list = ('3gp', 'amr', 'flv', 'mkv', 'mp3', 'mp4', 'wav', '3g2',
+        'aac', 'mov', 'aiff', 'au', 'avi', 'mpg', 'ogg', 'ppm', 'pgm', 'pbm')
         # Available lexers: http://pygments.org/docs/lexers/
 
-        ext = path.split('.')[-1]
+        ext = path.split('.')[-1].lower()
         filename = path.split('/')[-1]
         lexerNotFound = ClassNotFound
 
